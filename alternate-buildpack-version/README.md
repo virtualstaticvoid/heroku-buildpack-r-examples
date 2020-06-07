@@ -24,7 +24,7 @@ git add --all
 git commit -m "initial"
 
 # create a new heroku application and deploye
-heroku create --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git#heroku-16
+heroku create --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git
 
 # set the version(s) to use
 heroku config:set BUILD_PACK_VERSION="20180110-2010"
