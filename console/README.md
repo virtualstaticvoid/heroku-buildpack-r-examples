@@ -1,35 +1,41 @@
 # Example R App on Heroku
 
-This is an example R application, which uses the [heroku-buildpack-r](https://github.com/virtualstaticvoid/heroku-buildpack-r) on Heroku,
+This is an example R application, which uses the [heroku-buildpack-r][buildpack] on Heroku,
 to demonstrate running the R console via the `heroku run` command.
 
-Note that since the Heroku instance created when using the `run` command is ephemeral, any changes you make during the session will be lost when you exit the console.
+**Note:** The Heroku instance created when using the `run` command is ephemeral, any changes you
+make during the session _WILL BE LOST_ when you exit the console.
+
+## Usage
+
+Execute these commands to get started:
 
 ```bash
-# get the head revision of this source
-git clone --depth=1 https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
-cd heroku-buildpack-r-examples
+# get the sources
+git clone https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
+cd heroku-buildpack-r-examples/console
 
-# remove git since we'll reinitialize in the example directory
-rm -rf .git
-
-# change to this example's directory
-cd console
-
-# initialize git and commit
-git init
+# initialize git
+git init -b main
 git add --all
 git commit -m "initial"
 
-# create a new heroku application and deploye
-heroku create --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git
+# create a new heroku application, set the buildpack and deploy
+heroku create --stack heroku-20 --buildpack vsv/heroku-buildpack-r
 
-# deploy the application
-git push heroku master
+# set the R version to use
+heroku config:set R_VERSION="4.0.0"
 
-# check the logs
-heroku logs
+# deploy
+git push heroku main
 
-# test it out
+# run R console on Heroku
 heroku run R
 ```
+
+## License
+
+MIT License. Copyright (c) 2017 Chris Stefano. See [LICENSE](../LICENSE) for details.
+
+<!-- Links -->
+[buildpack]: https://github.com/virtualstaticvoid/heroku-buildpack-r
