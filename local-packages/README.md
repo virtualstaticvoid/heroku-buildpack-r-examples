@@ -1,41 +1,46 @@
 # Example R App on Heroku
 
-This is an example R application, which uses the [heroku-buildpack-r](https://github.com/virtualstaticvoid/heroku-buildpack-r) on Heroku,
+This is an example R application, which uses the [heroku-buildpack-r][buildpack] on Heroku,
 to demonstrate installing R packages from the application directory instead of from CRAN.
 
-This is desirable if you use an outdated package, or have a private package which is not published on CRAN.
+This is useful if you use an outdated package, or a private package which is not published on CRAN.
 
-Place the `tar.gz` file of the package into the root or a sub-directory of the application, and add a line of code to the `init.R` file to install it from that directory.
+Save the `*.tar.gz` file of the package to the source directory of the application, and use the
+`install.packages(...)` method in the `init.R` file to install it.
 
-This example includes the `localpkgs\Rnlminb2_2110.79.tar.gz` file, and it is installed using `install.packages("/app/localpkgs/Rnlminb2_2110.79.tar.gz", repos=NULL, type="source")`.
+This example includes the `localpkgs\Rnlminb2_2110.79.tar.gz` file, which is installed using
+`install.packages("./localpkgs/Rnlminb2_2110.79.tar.gz", repos=NULL, type="source")`.
 
-Notice that the path to the package file is fully qualified, and is rooted in `/app` since this is default location for the application files when deployed on Heroku.
+**NOTE:** The path to the package file is a _relative_ path so it works on your development
+environment and on Heroku.
+
+## Usage
+
+Execute these commands to get started:
 
 ```bash
-# get the head revision of this source
-git clone --depth=1 https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
-cd heroku-buildpack-r-examples
+# get the sources
+git clone https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
+cd heroku-buildpack-r-examples/local-packages
 
-# remove git since we'll reinitialize in the example directory
-rm -rf .git
-
-# change to this example's directory
-cd alternate-r-version
-
-# initialize git and commit
-git init
+# initialize git
+git init -b main
 git add --all
 git commit -m "initial"
 
-# create a new heroku application and deploye
-heroku create --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git
+# create a new heroku application, set the buildpack and deploy
+heroku create --stack heroku-20 --buildpack vsv/heroku-buildpack-r
 
-# deploy the application
-git push heroku master
+# deploy and inspect the output
+git push heroku main
 
-# check the logs
-heroku logs
-
-# test it out
-heroku run R --no-save -f /app/prog.R
+# run R program on Heroku
+heroku run R --no-save -f prog.R
 ```
+
+## License
+
+MIT License. Copyright (c) 2017 Chris Stefano. See [LICENSE](../LICENSE) for details.
+
+<!-- Links -->
+[buildpack]: https://github.com/virtualstaticvoid/heroku-buildpack-r
