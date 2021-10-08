@@ -1,38 +1,44 @@
 # Example R App on Heroku
 
-This is an example R application, which uses the [heroku-buildpack-r](https://github.com/virtualstaticvoid/heroku-buildpack-r) on Heroku,
+This is an example R application, which uses the [heroku-buildpack-r][buildpack] on Heroku,
 to demonstrate the use of environment variables from R during slug compilation and at runtime.
 
-This example sets the `MYVAR1` and `MYVAR2` environment variables. Check the deploy log, or console output to see their values displayed.
+This example sets the `MYVAR1` and `MYVAR2` environment variables. Check the deploy log, or
+console output to see their values displayed.
+
+## Usage
+
+Execute these commands to get started:
 
 ```bash
-# get the head revision of this source
-git clone --depth=1 https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
-cd heroku-buildpack-r-examples
+# get the sources
+git clone https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
+cd heroku-buildpack-r-examples/environment
 
-# remove git since we'll reinitialize in the example directory
-rm -rf .git
-
-# change to this example's directory
-cd environment
-
-# initialize git and commit
-git init
+# initialize git
+git init -b main
 git add --all
 git commit -m "initial"
 
-# create a new heroku application and deploye
-heroku create --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git
+# create a new heroku application, set the buildpack and deploy
+heroku create --stack heroku-20 --buildpack vsv/heroku-buildpack-r
 
 # set values for MYVAR1 and MYVAR2
 heroku config:set MYVAR1="foo" MYVAR2="bar"
 
-# deploy the application
-git push heroku master
+# deploy and inspect the output
+git push heroku main
 
-# check the logs
+# inspect the log output
 heroku logs
 
-# test it out
-heroku run R --no-save -f /app/prog.R
+# run R program on Heroku
+heroku run R --no-save -f prog.R
 ```
+
+## License
+
+MIT License. Copyright (c) 2017 Chris Stefano. See [LICENSE](../LICENSE) for details.
+
+<!-- Links -->
+[buildpack]: https://github.com/virtualstaticvoid/heroku-buildpack-r
