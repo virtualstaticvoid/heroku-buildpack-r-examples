@@ -3,7 +3,7 @@
 This is an example R application, which uses the [heroku-buildpack-r][buildpack] on Heroku,
 to demonstrate using Ruby, with Sinatra API and the [rinruby][rinruby] gem.
 
-![Screenshot][screenshot.png]
+![Screenshot](screenshot.png)
 
 ## Usage
 

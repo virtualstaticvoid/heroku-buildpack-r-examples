@@ -3,7 +3,7 @@
 This is an example R application, which uses the [heroku-buildpack-r][buildpack] on Heroku,
 to demonstrate a simple word cloud generator, based on [this blog post][post] by PirateGrunt.
 
-![Screenshot][screenshot.png]
+![Screenshot](screenshot.png)
 
 ## Usage
 
