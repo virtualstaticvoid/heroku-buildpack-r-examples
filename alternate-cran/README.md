@@ -1,38 +1,37 @@
 # Example R App on Heroku
 
-This is an example R application, which uses the [heroku-buildpack-r](https://github.com/virtualstaticvoid/heroku-buildpack-r) on Heroku,
+This is an example R application, which uses the [heroku-buildpack-r][buildpack] on Heroku,
 to demonstrate using a different CRAN mirror to use when installing R packages.
 
 This is done by setting the `CRAN_MIRROR` environment variable to the desired CRAN mirror's URL.
 
+## Usage
+
+Execute these commands to get started:
+
 ```bash
-# get the head revision of this source
-git clone --depth=1 https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
-cd heroku-buildpack-r-examples
+# get the sources
+git clone https://github.com/virtualstaticvoid/heroku-buildpack-r-examples.git
+cd heroku-buildpack-r-examples/alternate-cran
 
-# remove git since we'll reinitialize in the example directory
-rm -rf .git
-
-# change to this example's directory
-cd alternate-cran
-
-# initialize git and commit
-git init
+# initialize git
+git init -b main
 git add --all
 git commit -m "initial"
 
-# create a new heroku application and deploye
-heroku create --buildpack https://github.com/virtualstaticvoid/heroku-buildpack-r.git
+# create a new heroku application, set the buildpack and deploy
+heroku create --stack heroku-20 --buildpack vsv/heroku-buildpack-r
 
 # set the CRAN URL to use
 heroku config:set CRAN_MIRROR="http://cloud.r-project.org"
 
-# deploy the application
-git push heroku master
-
-# check the logs
-heroku logs
-
-# test it out
-heroku run R --no-save -f /app/prog.R
+# deploy
+git push heroku main
 ```
+
+## License
+
+MIT License. Copyright (c) 2017 Chris Stefano. See [LICENSE](../LICENSE) for details.
+
+<!-- Links -->
+[buildpack]: https://github.com/virtualstaticvoid/heroku-buildpack-r
