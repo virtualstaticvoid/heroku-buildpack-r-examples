@@ -1,4 +1,4 @@
-ruby '2.4.0'
+ruby '3.0.0'
 
 source "http://rubygems.org"
 
@@ -7,4 +7,3 @@ gem "thin"
 gem "sinatra"
 gem "rinruby", :github => "virtualstaticvoid/rinruby", :branch => "master"
 gem "foreman", :group => :development
-
